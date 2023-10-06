@@ -20,9 +20,16 @@ service Greeter {
 // The request message containing the user's name
 message HelloRequest {
   string name = 1;
+  string email = 2;
 }
 
 // The response message containing the greetings
 message HelloReply {
   string message = 1;
+}
+
+enum Status {
+  STATUS_UNSPECIFIED = 0;
+  STATUS_FIRST_VALUE = 1;
+  STATUS_SECOND_VALUE = 2;
 }

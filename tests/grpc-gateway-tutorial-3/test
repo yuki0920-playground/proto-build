@@ -11,3 +11,28 @@ $ buf generate
 ```
 
 ## Failure
+
+buf.work.yamlに複数指定したモジュールのbuf.yamlがない、もしくは同じnameになっている
+
+```
+yuki@yukideMacBook-Air: ~/ghq/github.com/yuki0920-playground/proto-build/tests/grpc-gateway-tutorial-3 (main *) 23-10-07 1:48
+$ pwd
+/Users/yuki/ghq/github.com/yuki0920-playground/proto-build/tests/grpc-gateway-tutorial-3
+
+yuki@yukideMacBook-Air: ~/ghq/github.com/yuki0920-playground/proto-build/tests/grpc-gateway-tutorial-3 (main *%) 23-10-07 1:16
+$ buf generate
+Failure: module "buf.build/myuser/myrepo" is provided by multiple workspace directories listed in buf.work.yaml
+```
+
+importはできているが参照できていないエラー
+importしているモジュールを指定する必要があった
+
+```
+yuki@yukideMacBook-Air: ~/ghq/github.com/yuki0920-playground/proto-build/tests/grpc-gateway-tutorial-3 (main *) 23-10-07 1:48
+$ pwd
+/Users/yuki/ghq/github.com/yuki0920-playground/proto-build/tests/grpc-gateway-tutorial-3
+
+yuki@yukideMacBook-Air: ~/ghq/github.com/yuki0920-playground/proto-build/tests/grpc-gateway-tutorial-3 (main *) 23-10-07 1:46
+$ buf generate
+proto/helloworldnew/helloworldnew/hello_world_new.proto:24:3:field helloworldnew.HelloRequest.status: unknown type Status
+```
