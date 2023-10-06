@@ -1,0 +1,70 @@
+## Success
+
+```
+yuki@yukideMacBook-Air: ~/ghq/github.com/yuki0920-playground/proto-build/tests/grpc-gateway-tutorial (main #%) 23-10-06 20:48
+$ pwd
+/Users/yuki/ghq/github.com/yuki0920-playground/proto-build/tests/grpc-gateway-tutorial
+
+yuki@yukideMacBook-Air: ~/ghq/github.com/yuki0920-playground/proto-build/tests/grpc-gateway-tutorial (main #%) 23-10-06 20:48
+$ protoc -I ./proto \
+   --go_out ./proto --go_opt paths=source_relative \
+   --go-grpc_out ./proto --go-grpc_opt paths=source_relative \
+   ./proto/helloworld/hello_world.proto
+```
+
+```
+yuki@yukideMacBook-Air: ~/ghq/github.com/yuki0920-playground/proto-build/tests/grpc-gateway-tutorial (main +) 23-10-06 21:00
+$ pwd
+/Users/yuki/ghq/github.com/yuki0920-playground/proto-build/tests/grpc-gateway-tutorial
+
+yuki@yukideMacBook-Air: ~/ghq/github.com/yuki0920-playground/proto-build/tests/grpc-gateway-tutorial (main +) 23-10-06 21:00
+$ buf generate proto
+```
+
+## Failure
+`buf generate` のあとに proto を指定しないと proto/prot ディレクトリが作成された
+```
+yuki@yukideMacBook-Air: ~/ghq/github.com/yuki0920-playground/proto-build/tests/grpc-gateway-tutorial (main +) 23-10-06 21:01
+$ pwd
+/Users/yuki/ghq/github.com/yuki0920-playground/proto-build/tests/grpc-gateway-tutorial
+
+yuki@yukideMacBook-Air: ~/ghq/github.com/yuki0920-playground/proto-build/tests/grpc-gateway-tutorial (main *+) 23-10-06 21:02
+$ buf generate
+```
+
+buf.yaml の deps を指定しないとエラーとなる
+```
+$ buf generate proto
+proto/helloworld/hello_world.proto:7:8:google/api/annotations.proto: does not exist
+```
+
+deps を指定しても、 buf mod update を実行しないとエラーとなる
+```
+yuki@yukideMacBook-Air: ~/ghq/github.com/yuki0920-playground/proto-build/tests/grpc-gateway-tutorial (main *) 23-10-06 21:09
+$ buf generate proto
+WARN	Specified deps are not covered in your buf.lock, run "buf mod update":
+	- buf.build/googleapis/googleapis
+proto/helloworld/hello_world.proto:5:8:google/api/annotations.proto: does not exist
+```
+
+buf generate コマンドを実行するディレクトリに buf.gen.yaml がないとエラーとなる
+```
+yuki@yukideMacBook-Air: ~/ghq/github.com/yuki0920-playground/proto-build (main %) 23-10-06 21:19
+$ pwd
+/Users/yuki/ghq/github.com/yuki0920-playground/proto-build
+
+yuki@yukideMacBook-Air: ~/ghq/github.com/yuki0920-playground/proto-build (main %) 23-10-06 21:19
+$ buf generate tests/grpc-gateway-tutorial/proto
+Failure: buf.gen.yaml: does not exist
+```
+
+適切でない場所に buf.gen.yaml を配置しても deps が見つからずエラーとなる。
+```
+yuki@yukideMacBook-Air: ~/ghq/github.com/yuki0920-playground/proto-build/tests (main *%) 23-10-06 21:21
+$ pwd
+/Users/yuki/ghq/github.com/yuki0920-playground/proto-build/tests
+
+yuki@yukideMacBook-Air: ~/ghq/github.com/yuki0920-playground/proto-build/tests (main *%) 23-10-06 21:21
+$ buf generate grpc-gateway-tutorial
+grpc-gateway-tutorial/proto/helloworld/hello_world.proto:5:8:google/api/annotations.proto: does not exist
+```
