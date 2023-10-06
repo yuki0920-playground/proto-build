@@ -1,5 +1,12 @@
 ## Success
 
+```
+yuki@yukideMacBook-Air: ~/ghq/github.com/yuki0920-playground/proto-build/tests/grpc-gateway-tutorial-2 (main +) 23-10-06 21:36
+$ pwd
+/Users/yuki/ghq/github.com/yuki0920-playground/proto-build/tests/grpc-gateway-tutorial-2
 
+yuki@yukideMacBook-Air: ~/ghq/github.com/yuki0920-playground/proto-build/tests/grpc-gateway-tutorial-2 (main +) 23-10-06 21:36
+$ buf generate proto
+```
 
 ## Failure
